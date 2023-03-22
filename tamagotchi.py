@@ -1,0 +1,2 @@
+class tamagotchi:
+    pass
