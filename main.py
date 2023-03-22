@@ -1,0 +1,1 @@
+from tamagotchi import tamagotchi
