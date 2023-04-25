@@ -40,6 +40,23 @@ def UpdateSlider(Slider: ttk.Progressbar, value):
     Slider['value'] = value
 
 
+def Simogatás():
+    ClearScreen()
+    global EletSlider
+
+    EletSlider = ttk.Progressbar(master=frame1, length=100, variable=Elet)
+    EletSlider.pack(padx=10, pady=10)
+
+    UpdateSlider(EletSlider, Elet)
+
+    simogass_meg = customtkinter.CTkLabel(master=frame1, text="Simogass meg!", font=("Roboto", 30))
+    simogass_meg.pack(padx=10, pady=10)
+    simogat = customtkinter.CTkButton(master=frame1, image=karakter_image, text="", width=120, height=30, command=lambda: ChangeElet(Elet))
+    simogat.pack(padx=10, pady=5)
+    vissza_button = customtkinter.CTkButton(master=frame1, text="Lépj ki!", font=("Roboto", 20), command=lambda: Main(karakter))
+    vissza_button.pack(padx=10, pady=10)
+
+
 def Kaja():
     ClearScreen()
     global EhsegSlider
@@ -102,7 +119,7 @@ def Main(inp_karakter: str):
 
     UpdateSlider(KedvSlider, Kedv)
 
-    buttonElet = customtkinter.CTkButton(master=frame1, text="Simogatás", width=120, height=30, command=lambda: ChangeElet(19))
+    buttonElet = customtkinter.CTkButton(master=frame1, text="Simogatás", width=120, height=30, command=lambda: Simogatás())
     buttonElet.pack(padx=10, pady=5, side="left")
     buttonEhseg = customtkinter.CTkButton(master=frame1, text="Megetetés", width=120, height=30, command=lambda: Kaja())
     buttonEhseg.pack(padx=10, pady=5, side='right')
