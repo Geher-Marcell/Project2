@@ -1,6 +1,7 @@
 from autoGame import AutoGame
 
 from tkinter import ttk
+from tkinter import messagebox
 import customtkinter
 from PIL import Image
 
@@ -51,7 +52,7 @@ def Simogatás():
 
     simogass_meg = customtkinter.CTkLabel(master=frame1, text="Simogass meg!", font=("Roboto", 30))
     simogass_meg.pack(padx=10, pady=10)
-    simogat = customtkinter.CTkButton(master=frame1, image=karakter_image, text="", width=120, height=30, command=lambda: ChangeElet(Elet))
+    simogat = customtkinter.CTkButton(master=frame1, image=karakter_image, text="", width=120, height=30, command=lambda: ChangeElet(10))
     simogat.pack(padx=10, pady=5)
     vissza_button = customtkinter.CTkButton(master=frame1, text="Lépj ki!", font=("Roboto", 20), command=lambda: Main(karakter))
     vissza_button.pack(padx=10, pady=10)
@@ -163,8 +164,15 @@ def Köszöntő():
     text = customtkinter.CTkEntry(master=frame1, width=200, justify="center", font=("Roboto", 15))
     text.pack(padx=10, pady=10)
 
-    button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: Választó(text.get()))
+    button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: nev_kotelezo(text.get()))
     button1.pack(padx=10, pady=5)
+
+
+def nev_kotelezo(text):
+    if text.strip() == "":
+        messagebox.showerror("Hiba", "Kérlek, adj meg egy nevet az állatodnak!")
+    else:
+        Választó(text)
 
 
 def ClearScreen():
