@@ -26,29 +26,23 @@ my_image4 = customtkinter.CTkImage(Image.open("hamburger.jpg"), size=(100, 100))
 my_image5 = customtkinter.CTkImage(Image.open("halfHamburger.jpg"), size=(100, 100))
 
 
-def tab4(Ehseg: ttk.Progressbar):
-    label_karakter.destroy()
-    label_elet.destroy()
-    Elet.destroy()
-    label_ehseg.destroy()
-    label_kedv.destroy()
-    Kedv.destroy()
-    buttonElet.destroy()
-    buttonEhseg.destroy()
-    buttonKedv.destroy()
+def tab4(Ehsegint: int):
+    clear_screen()
 
-    karakter1 = customtkinter.CTkLabel(master=frame1, text="" + karakter, font=("Roboto", 30))
+    Ehseg = ttk.Progressbar(master=frame1, length=100)
+    Ehseg.step(Ehsegint)
+    Ehseg.pack()
+    karakter1 = customtkinter.CTkLabel(master=frame1, image=karakter_image, text="", font=("Roboto", 30))
     karakter1.pack(padx=10, pady=10)
-    kaja = customtkinter.CTkButton(master=frame1, text="", image=my_image4, font=("Roboto", 30), command=lambda: Ehseg.step(19))
-    Ehseg.step(19)
+    label_etess = customtkinter.CTkLabel(master=frame1, text="Etess meg!", font=("Roboto", 20))
+    label_etess.pack(padx=10, pady=10)
+    kaja = customtkinter.CTkButton(master=frame1, text="", image=my_image4, font=("Roboto", 30), command=lambda: ehseg100(Ehseg))
     kaja.pack(padx=10, pady=10)
-    if True:
-        kaja.destroy()
-        jolLakott = customtkinter.CTkLabel(master=frame1, text="Tele vagyok!", font=("Roboto", 30))
-        jolLakott.pack(padx=10, pady=10)
 
 
 def tab3(inp_karakter: str):
+    clear_screen()
+    global karakter_image
     global label_karakter
     global label_elet
     global Elet
@@ -60,22 +54,19 @@ def tab3(inp_karakter: str):
     global buttonKedv
     global karakter
 
-    label3.destroy()
-    labelanyad.destroy()
-    bbutton.destroy()
-    bbutton1.destroy()
-    bbutton2.destroy()
-
     karakter = inp_karakter
-
+    karakter_image = 0
     if karakter == "kutya":
         label_karakter = customtkinter.CTkLabel(master=frame1, image=my_image, text="", font=("Roboto", 30))
+        karakter_image = my_image
         label_karakter.pack(padx=10, pady=10)
     elif karakter == "macska":
         label_karakter = customtkinter.CTkLabel(master=frame1, image=my_image2, text="", font=("Roboto", 30))
+        karakter_image = my_image2
         label_karakter.pack(padx=10, pady=10)
     elif karakter == "anyud":
         label_karakter = customtkinter.CTkLabel(master=frame1, image=my_image3, text="", font=("Roboto", 30))
+        karakter_image = my_image3
         label_karakter.pack(padx=10, pady=10)
     label_elet = customtkinter.CTkLabel(master=frame1, text="Élet: ", font=("Roboto", 15))
     label_elet.pack(padx=10, pady=3)
@@ -98,23 +89,19 @@ def tab3(inp_karakter: str):
 
     buttonElet = customtkinter.CTkButton(master=frame1, text="Simogatás", width=120, height=30, command=lambda: Elet.step(19))
     buttonElet.pack(padx=10, pady=5, side="left")
-    buttonEhseg = customtkinter.CTkButton(master=frame1, text="Megetetés", width=120, height=30, command=lambda: tab4(Ehseg))
+    buttonEhseg = customtkinter.CTkButton(master=frame1, text="Megetetés", width=120, height=30, command=lambda: tab4(Ehseg["value"]))
     buttonEhseg.pack(padx=10, pady=5, side='right')
     buttonKedv = customtkinter.CTkButton(master=frame1, text="Játék állatoddal", width=120, height=30, command=lambda: auto(Kedv))
     buttonKedv.pack(padx=10, pady=5, side="right")
 
 
 def tab2(text1: str):
+    clear_screen()
     global label3
     global labelanyad
     global bbutton
     global bbutton1
     global bbutton2
-
-    label1.destroy()
-    label2.destroy()
-    text.destroy()
-    button1.destroy()
 
     label3 = customtkinter.CTkLabel(master=frame1, text="Az állatod neve: " + text1, font=("Roboto", 30))
     label3.pack(padx=10, pady=10)
@@ -146,6 +133,21 @@ def tab1():
 
     button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: tab2(text.get()))
     button1.pack(padx=10, pady=5)
+
+
+def ehseg100(Ehseg: ttk.Progressbar):
+    if Ehseg["value"] > 90 and Ehseg["value"] < 100:
+        jolLakott = customtkinter.CTkLabel(master=frame1, text="Tele vagyok!", font=("Roboto", 20))
+        jolLakott.pack(padx=10, pady=10)
+        vissza_button = customtkinter.CTkButton(master=frame1, text="Lépj ki!", font=("Roboto", 20), command=lambda: tab3(karakter_image))
+        vissza_button.pack(padx=10, pady=10)
+    else:
+        Ehseg.step(19)
+
+
+def clear_screen():
+    for widgets in frame1.winfo_children():
+        widgets.destroy()
 
 
 def auto(Kedv: ttk.Progressbar):
@@ -388,3 +390,6 @@ def auto(Kedv: ttk.Progressbar):
 
 tab1()
 root.mainloop()
+
+# pyright: reportMissingTypeStubs=false
+# pyright: reportUnknownMemberType=false
