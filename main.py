@@ -108,6 +108,7 @@ def Main(inp_karakter: str):
     buttonEhseg.pack(padx=10, pady=5, side='right')
     buttonKedv = customtkinter.CTkButton(master=frame1, text="Játék állatoddal", width=120, height=30, command=lambda: ChangeKedv(AutoGame.Game()))
     buttonKedv.pack(padx=10, pady=5, side="right")
+    Mentés()
 
 
 def Választó(text1: str):
@@ -129,6 +130,7 @@ def Választó(text1: str):
     bbutton1.pack(padx=10, pady=10, side="right")
     bbutton2 = customtkinter.CTkButton(master=frame1, image=my_image3, text="", width=30, fg_color="transparent", command=lambda: Main("anyud"))
     bbutton2.pack(padx=10, pady=10, side="right")
+    Mentés()
 
 
 def Köszöntő():
@@ -148,6 +150,7 @@ def Köszöntő():
 
     button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: Választó(text.get()))
     button1.pack(padx=10, pady=5)
+    Mentés()
 
 
 def ClearScreen():
@@ -172,8 +175,17 @@ def ChangeEhseg(value: int):
     Ehseg += value
     UpdateSlider(EhsegSlider, Ehseg)
 
+def Mentés():
+    with open('SaveFile.txt', 'w', encoding='utf-8') as file:
+        file.write(f'karakter = {karakter}\n')
+        file.write(f'Ehseg = {Ehseg}\n')
+        file.write(f'Elet = {Elet}\n')
+        file.write(f'Kedv = {Kedv}\n')
+
+Mentés()
 
 Köszöntő()
+
 root.mainloop()
 
 # pyright: reportMissingTypeStubs=false

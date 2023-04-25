@@ -1,0 +1,4 @@
+karakter = anyud
+Ehseg = 170
+Elet = 115
+Kedv = 26
