@@ -25,6 +25,7 @@ my_image3 = customtkinter.CTkImage(Image.open("tamagotchi3.png"), size=(100, 100
 my_image4 = customtkinter.CTkImage(Image.open("hamburger.jpg"), size=(100, 100))
 my_image5 = customtkinter.CTkImage(Image.open("halfHamburger.jpg"), size=(100, 100))
 
+Nev = ''
 karakter_image = None
 karakter = ""
 Ehseg = 20
@@ -102,11 +103,11 @@ def Main(inp_karakter: str):
 
     UpdateSlider(KedvSlider, Kedv)
 
-    buttonElet = customtkinter.CTkButton(master=frame1, text="Simogatás", width=120, height=30, command=lambda: ChangeElet(19))
+    buttonElet = customtkinter.CTkButton(master=frame1, text="Simogatás", width=120, height=30, command=lambda: ChangeElet(10))
     buttonElet.pack(padx=10, pady=5, side="left")
     buttonEhseg = customtkinter.CTkButton(master=frame1, text="Megetetés", width=120, height=30, command=lambda: Kaja())
     buttonEhseg.pack(padx=10, pady=5, side='right')
-    buttonKedv = customtkinter.CTkButton(master=frame1, text="Játék állatoddal", width=120, height=30, command=lambda: ChangeKedv(AutoGame.Game()))
+    buttonKedv = customtkinter.CTkButton(master=frame1, text="Játék állatoddal", width=120, height=30, command=lambda: ChangeKedv(2 * AutoGame.Game()))
     buttonKedv.pack(padx=10, pady=5, side="right")
     Mentés()
 
@@ -138,6 +139,7 @@ def Köszöntő():
     global label2
     global text
     global button1
+    global Nev
 
     label1 = customtkinter.CTkLabel(master=frame1, text="Szia, üdv a játékunkban!", font=("Roboto", 30))
     label1.pack(padx=10, pady=10)
@@ -161,26 +163,44 @@ def ClearScreen():
 def ChangeElet(value: int):
     global Elet
     Elet += value
+    if Elet > 100:
+        Elet = 100
     UpdateSlider(EletSlider, Elet)
+    Mentés()
 
 
 def ChangeKedv(value: int):
     global Kedv
     Kedv += value
+    if Kedv > 100:
+        Kedv = 100
     UpdateSlider(KedvSlider, Kedv)
+    Mentés()
 
 
 def ChangeEhseg(value: int):
     global Ehseg
     Ehseg += value
+    if Ehseg > 100:
+        Ehseg = 100
     UpdateSlider(EhsegSlider, Ehseg)
+    Mentés()
+
 
 def Mentés():
+    print("Mentés..")
     with open('SaveFile.txt', 'w', encoding='utf-8') as file:
-        file.write(f'karakter = {karakter}\n')
-        file.write(f'Ehseg = {Ehseg}\n')
-        file.write(f'Elet = {Elet}\n')
-        file.write(f'Kedv = {Kedv}\n')
+        file.write('nev;karakter;ehseg;elet;kedv;ido\n')
+        # file.write(f'karakter = {karakter}\n')
+        # file.write(f'Ehseg = {Ehseg}\n')
+        # file.write(f'Elet = {Elet}\n')
+        # file.write(f'Kedv = {Kedv}\n')
+        file.write(f'{Nev};{karakter};{Ehseg};{Elet};{Kedv};')
+
+
+# def save_kereses():
+#     try:
+#         with open('SaveFile.txt', 'r', encoding='uft-8')
 
 Mentés()
 

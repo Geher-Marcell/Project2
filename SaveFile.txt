@@ -1,4 +1,2 @@
-karakter = anyud
-Ehseg = 170
-Elet = 115
-Kedv = 26
+nev;karakter;ehseg;elet;kedv;ido
+;kutya;20;50;20;
