@@ -1,10 +1,11 @@
 from autoGame import AutoGame
+from tamagotchi import tamagotchi
 
 from tkinter import ttk
 import customtkinter
 from PIL import Image
 
-
+t: tamagotchi = tamagotchi
 customtkinter.set_default_color_theme("green")
 root = customtkinter.CTk()
 root.resizable(False, False)
@@ -25,41 +26,35 @@ my_image3 = customtkinter.CTkImage(Image.open("tamagotchi3.png"), size=(100, 100
 my_image4 = customtkinter.CTkImage(Image.open("hamburger.jpg"), size=(100, 100))
 my_image5 = customtkinter.CTkImage(Image.open("halfHamburger.jpg"), size=(100, 100))
 
-Nev = ''
-karakter_image = None
-karakter = ""
-Ehseg = 20
-Elet = 20
-Kedv = 20
+statok: list[tamagotchi] = []
+def Mentés():
+    print("Mentés..")
+    with open('SaveFile.txt', 'w', encoding='utf-8') as file:
+        file.write('nev;karakter;ehseg;elet;kedv;ido\n')
+        # file.write(f'karakter = {karakter}\n')
+        # file.write(f'Ehseg = {Ehseg}\n')
+        # file.write(f'Elet = {Elet}\n')
+        # file.write(f'Kedv = {Kedv}\n')
+        file.write(f'{Nev};{karakter};{Ehseg};{Elet};{Kedv};')
+def Köszöntő():
+    global label1
+    global label2
+    global text
+    global button1
+    global Nev
 
-EletSlider = None
-EhsegSlider = None
-KedvSlider = None
+    label1 = customtkinter.CTkLabel(master=frame1, text="Szia, üdv a játékunkban!", font=("Roboto", 30))
+    label1.pack(padx=10, pady=10)
 
+    label2 = customtkinter.CTkLabel(master=frame1, text="Nevezd el az állatod!", font=("Roboto", 30))
+    label2.pack(padx=10, pady=10)
 
-def UpdateSlider(Slider: ttk.Progressbar, value):
-    Slider['value'] = value
+    text = customtkinter.CTkEntry(master=frame1, width=200, justify="center", font=("Roboto", 15))
+    text.pack(padx=10, pady=10)
 
-
-def Kaja():
-    ClearScreen()
-    global EhsegSlider
-
-    EhsegSlider = ttk.Progressbar(master=frame1, length=100, variable=Ehseg)
-    EhsegSlider.pack(padx=10, pady=10)
-
-    UpdateSlider(EhsegSlider, Ehseg)
-
-    karakter1 = customtkinter.CTkLabel(master=frame1, image=karakter_image, text="", font=("Roboto", 30))
-    karakter1.pack(padx=10, pady=10)
-    label_etess = customtkinter.CTkLabel(master=frame1, text="Etess meg!", font=("Roboto", 20))
-    label_etess.pack(padx=10, pady=10)
-    kaja = customtkinter.CTkButton(master=frame1, text="", image=my_image4, font=("Roboto", 30), command=lambda: ChangeEhseg(10))
-    kaja.pack(padx=10, pady=10)
-    vissza_button = customtkinter.CTkButton(master=frame1, text="Vissza", font=("Roboto", 20), command=lambda: Main(karakter))
-    vissza_button.pack(padx=10, pady=10)
-
-
+    button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: Választó(text.get()))
+    button1.pack(padx=10, pady=5)
+    Mentés()
 def Main(inp_karakter: str):
     ClearScreen()
     global karakter
@@ -110,6 +105,60 @@ def Main(inp_karakter: str):
     buttonKedv = customtkinter.CTkButton(master=frame1, text="Játék állatoddal", width=120, height=30, command=lambda: ChangeKedv(2 * AutoGame.Game()))
     buttonKedv.pack(padx=10, pady=5, side="right")
     Mentés()
+try:
+    with open('SaveFile.txt', 'r', encoding='utf-8') as file:
+        for sor in file.read().splitlines()[1:]:
+            statok.append(tamagotchi(sor))
+    Nev = t.név
+    karakter = t.kar
+    Ehseg = int(t.éhség)
+    Elet = int(t.élet)
+    Kedv = int(t.kedvv)
+    Main()
+
+except FileNotFoundError:            
+    Nev = ' ' 
+    karakter_image = None
+    karakter = ""
+    Ehseg = 20 
+    Elet = 20
+    Kedv = 20
+    tamagotchi.nev = ''
+    tamagotchi.karakter = ''
+    tamagotchi.ehseg = 20
+    tamagotchi.elet = 20
+    tamagotchi.kedv = 20
+
+    Köszöntő()
+
+EletSlider = None
+EhsegSlider = None
+KedvSlider = None
+
+
+def UpdateSlider(Slider: ttk.Progressbar, value):
+    Slider['value'] = value
+
+
+def Kaja():
+    ClearScreen()
+    global EhsegSlider
+
+    EhsegSlider = ttk.Progressbar(master=frame1, length=100, variable=Ehseg)
+    EhsegSlider.pack(padx=10, pady=10)
+
+    UpdateSlider(EhsegSlider, Ehseg)
+
+    karakter1 = customtkinter.CTkLabel(master=frame1, image=karakter_image, text="", font=("Roboto", 30))
+    karakter1.pack(padx=10, pady=10)
+    label_etess = customtkinter.CTkLabel(master=frame1, text="Etess meg!", font=("Roboto", 20))
+    label_etess.pack(padx=10, pady=10)
+    kaja = customtkinter.CTkButton(master=frame1, text="", image=my_image4, font=("Roboto", 30), command=lambda: ChangeEhseg(10))
+    kaja.pack(padx=10, pady=10)
+    vissza_button = customtkinter.CTkButton(master=frame1, text="Vissza", font=("Roboto", 20), command=lambda: Main(karakter))
+    vissza_button.pack(padx=10, pady=10)
+
+
 
 
 def Választó(text1: str):
@@ -134,25 +183,6 @@ def Választó(text1: str):
     Mentés()
 
 
-def Köszöntő():
-    global label1
-    global label2
-    global text
-    global button1
-    global Nev
-
-    label1 = customtkinter.CTkLabel(master=frame1, text="Szia, üdv a játékunkban!", font=("Roboto", 30))
-    label1.pack(padx=10, pady=10)
-
-    label2 = customtkinter.CTkLabel(master=frame1, text="Nevezd el az állatod!", font=("Roboto", 30))
-    label2.pack(padx=10, pady=10)
-
-    text = customtkinter.CTkEntry(master=frame1, width=200, justify="center", font=("Roboto", 15))
-    text.pack(padx=10, pady=10)
-
-    button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: Választó(text.get()))
-    button1.pack(padx=10, pady=5)
-    Mentés()
 
 
 def ClearScreen():
@@ -187,15 +217,6 @@ def ChangeEhseg(value: int):
     Mentés()
 
 
-def Mentés():
-    print("Mentés..")
-    with open('SaveFile.txt', 'w', encoding='utf-8') as file:
-        file.write('nev;karakter;ehseg;elet;kedv;ido\n')
-        # file.write(f'karakter = {karakter}\n')
-        # file.write(f'Ehseg = {Ehseg}\n')
-        # file.write(f'Elet = {Elet}\n')
-        # file.write(f'Kedv = {Kedv}\n')
-        file.write(f'{Nev};{karakter};{Ehseg};{Elet};{Kedv};')
 
 
 # def save_kereses():
@@ -204,7 +225,7 @@ def Mentés():
 
 Mentés()
 
-Köszöntő()
+# Köszöntő()
 
 root.mainloop()
 
