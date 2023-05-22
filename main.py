@@ -2,6 +2,7 @@ from autoGame import AutoGame
 from tamagotchi import tamagotchi
 
 from tkinter import ttk
+from tkinter import messagebox
 import customtkinter
 from PIL import Image
 
@@ -49,8 +50,50 @@ def Köszöntő():
     label2 = customtkinter.CTkLabel(master=frame1, text="Nevezd el az állatod!", font=("Roboto", 30))
     label2.pack(padx=10, pady=10)
 
+<<<<<<< HEAD
     text = customtkinter.CTkEntry(master=frame1, width=200, justify="center", font=("Roboto", 15))
     text.pack(padx=10, pady=10)
+=======
+def UpdateSlider(Slider: ttk.Progressbar, value):
+    Slider['value'] = value
+
+
+def Simogatás():
+    ClearScreen()
+    global EletSlider
+
+    EletSlider = ttk.Progressbar(master=frame1, length=100, variable=Elet)
+    EletSlider.pack(padx=10, pady=10)
+
+    UpdateSlider(EletSlider, Elet)
+
+    simogass_meg = customtkinter.CTkLabel(master=frame1, text="Simogass meg!", font=("Roboto", 30))
+    simogass_meg.pack(padx=10, pady=10)
+    simogat = customtkinter.CTkButton(master=frame1, image=karakter_image, text="", width=120, height=30, command=lambda: ChangeElet(10))
+    simogat.pack(padx=10, pady=5)
+    vissza_button = customtkinter.CTkButton(master=frame1, text="Lépj ki!", font=("Roboto", 20), command=lambda: Main(karakter))
+    vissza_button.pack(padx=10, pady=10)
+
+
+def Kaja():
+    ClearScreen()
+    global EhsegSlider
+
+    EhsegSlider = ttk.Progressbar(master=frame1, length=100, variable=Ehseg)
+    EhsegSlider.pack(padx=10, pady=10)
+
+    UpdateSlider(EhsegSlider, Ehseg)
+
+    karakter1 = customtkinter.CTkLabel(master=frame1, image=karakter_image, text="", font=("Roboto", 30))
+    karakter1.pack(padx=10, pady=10)
+    label_etess = customtkinter.CTkLabel(master=frame1, text="Etess meg!", font=("Roboto", 20))
+    label_etess.pack(padx=10, pady=10)
+    kaja = customtkinter.CTkButton(master=frame1, text="", image=my_image4, font=("Roboto", 30), command=lambda: ChangeEhseg(10))
+    kaja.pack(padx=10, pady=10)
+    vissza_button = customtkinter.CTkButton(master=frame1, text="Vissza", font=("Roboto", 20), command=lambda: Main(karakter))
+    vissza_button.pack(padx=10, pady=10)
+
+>>>>>>> master
 
     button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: Választó(text.get()))
     button1.pack(padx=10, pady=5)
@@ -98,7 +141,11 @@ def Main(inp_karakter: str):
 
     UpdateSlider(KedvSlider, Kedv)
 
+<<<<<<< HEAD
     buttonElet = customtkinter.CTkButton(master=frame1, text="Simogatás", width=120, height=30, command=lambda: ChangeElet(10))
+=======
+    buttonElet = customtkinter.CTkButton(master=frame1, text="Simogatás", width=120, height=30, command=lambda: Simogatás())
+>>>>>>> master
     buttonElet.pack(padx=10, pady=5, side="left")
     buttonEhseg = customtkinter.CTkButton(master=frame1, text="Megetetés", width=120, height=30, command=lambda: Kaja())
     buttonEhseg.pack(padx=10, pady=5, side='right')
@@ -183,6 +230,33 @@ def Választó(text1: str):
     Mentés()
 
 
+<<<<<<< HEAD
+=======
+def Köszöntő():
+    global label1
+    global label2
+    global text
+    global button1
+
+    label1 = customtkinter.CTkLabel(master=frame1, text="Szia, üdv a játékunkban!", font=("Roboto", 30))
+    label1.pack(padx=10, pady=10)
+
+    label2 = customtkinter.CTkLabel(master=frame1, text="Nevezd el az állatod!", font=("Roboto", 30))
+    label2.pack(padx=10, pady=10)
+
+    text = customtkinter.CTkEntry(master=frame1, width=200, justify="center", font=("Roboto", 15))
+    text.pack(padx=10, pady=10)
+
+    button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: nev_kotelezo(text.get()))
+    button1.pack(padx=10, pady=5)
+>>>>>>> master
+
+
+def nev_kotelezo(text):
+    if text.strip() == "":
+        messagebox.showerror("Hiba", "Kérlek, adj meg egy nevet az állatodnak!")
+    else:
+        Választó(text)
 
 
 def ClearScreen():
