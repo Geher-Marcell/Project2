@@ -175,6 +175,9 @@ class AutoGame:
 
                     # add to score
                     score += 1
+                    if Kedv > 100:
+                        Kedv = 100
+                    Kedv += 1
 
                     # speed up the game after passing 5 vehicles
                     if score > 0 and score % 5 == 0:
@@ -191,6 +194,14 @@ class AutoGame:
             screen.blit(text, text_rect)
 
             # check if there's a head on collision
+
+            # display the score
+            font = pygame.font.Font(pygame.font.get_default_font(), 16)
+            text = font.render('Kedv: ' + str(Kedv), True, white)
+            text_rect = text.get_rect()
+            text_rect.center = (50, 200)
+            screen.blit(text, text_rect)
+
             if pygame.sprite.spritecollide(player, vehicle_group, True):
                 gameover = True
                 crash_rect.center = [player.rect.center[0], player.rect.top]
@@ -233,8 +244,5 @@ class AutoGame:
                             # exit the loops
                             gameover = False
                             running = False
-
-                        Kedv += score
-                        score = 0
         pygame.quit()
         return Kedv
