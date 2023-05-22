@@ -70,7 +70,7 @@ class AutoGame:
         class PlayerVehicle(Vehicle):
 
             def __init__(self, x, y):
-                image = pygame.image.load('images/car.png')
+                image = pygame.image.load('images/AutoGame/car.png')
                 super().__init__(image, x, y)
 
         # sprite groups
@@ -85,11 +85,11 @@ class AutoGame:
         image_filenames = ['pickup_truck.png', 'semi_trailer.png', 'taxi.png', 'van.png']
         vehicle_images = []
         for image_filename in image_filenames:
-            image = pygame.image.load('images/' + image_filename)
+            image = pygame.image.load('images/AutoGame/' + image_filename)
             vehicle_images.append(image)
 
         # load the crash image
-        crash = pygame.image.load('images/crash.png')
+        crash = pygame.image.load('images/AutoGame/crash.png')
         crash_rect = crash.get_rect()
 
         # game loop
@@ -188,6 +188,11 @@ class AutoGame:
             text = font.render('Score: ' + str(score), True, white)
             text_rect = text.get_rect()
             text_rect.center = (50, 400)
+            screen.blit(text, text_rect)
+
+            text = font.render('Kedv: ' + str(Kedv), True, white)
+            text_rect = text.get_rect()
+            text_rect.center = (50, 200)
             screen.blit(text, text_rect)
 
             # check if there's a head on collision

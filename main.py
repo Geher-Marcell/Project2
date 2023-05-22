@@ -20,11 +20,11 @@ root.title("Tamagotchi")
 frame1 = customtkinter.CTkFrame(master=root)
 frame1.pack(padx=20, pady=10, fill="both", expand=True)
 
-my_image = customtkinter.CTkImage(Image.open("tamagotchi1.png"), size=(100, 100))
-my_image2 = customtkinter.CTkImage(Image.open("tamagotchi2.png"), size=(100, 100))
-my_image3 = customtkinter.CTkImage(Image.open("tamagotchi3.png"), size=(100, 100))
-my_image4 = customtkinter.CTkImage(Image.open("hamburger.jpg"), size=(100, 100))
-my_image5 = customtkinter.CTkImage(Image.open("halfHamburger.jpg"), size=(100, 100))
+my_image = customtkinter.CTkImage(Image.open("images/tamagotchi1.png"), size=(100, 100))
+my_image2 = customtkinter.CTkImage(Image.open("images/tamagotchi2.png"), size=(100, 100))
+my_image3 = customtkinter.CTkImage(Image.open("images/tamagotchi3.png"), size=(100, 100))
+my_image4 = customtkinter.CTkImage(Image.open("images/hamburger.jpg"), size=(100, 100))
+my_image5 = customtkinter.CTkImage(Image.open("images/5halfHamburger.jpg"), size=(100, 100))
 
 karakter_image = None
 karakter = ""
