@@ -168,9 +168,9 @@ try:
             adatok = sor.split(';')
             Nev = adatok[0]
             karakter = adatok[1]
-            Ehseg = adatok[2]
-            Elet = adatok[3]
-            Kedv = adatok[4]
+            Ehseg = int(adatok[2])
+            Elet = int(adatok[3])
+            Kedv = int(adatok[4])
     # Nev = t.név
     # karakter = t.kar
     # Ehseg = int(t.éhség)
