@@ -1,12 +1,12 @@
 from autoGame import AutoGame
-from tamagotchi import tamagotchi
+# from tamagotchi import tamagotchi
 
 from tkinter import ttk
 from tkinter import messagebox
 import customtkinter
 from PIL import Image
 
-t: tamagotchi = tamagotchi
+# t: tamagotchi = tamagotchi
 customtkinter.set_default_color_theme("green")
 root = customtkinter.CTk()
 root.resizable(False, False)
@@ -27,7 +27,12 @@ my_image3 = customtkinter.CTkImage(Image.open("tamagotchi3.png"), size=(100, 100
 my_image4 = customtkinter.CTkImage(Image.open("hamburger.jpg"), size=(100, 100))
 my_image5 = customtkinter.CTkImage(Image.open("halfHamburger.jpg"), size=(100, 100))
 
-statok: list[tamagotchi] = []
+# statok: list[tamagotchi] = []
+
+def ClearScreen():
+    for widgets in frame1.winfo_children():
+        widgets.destroy()
+
 def Mentés():
     print("Mentés..")
     with open('SaveFile.txt', 'w', encoding='utf-8') as file:
@@ -37,6 +42,8 @@ def Mentés():
         # file.write(f'Elet = {Elet}\n')
         # file.write(f'Kedv = {Kedv}\n')
         file.write(f'{Nev};{karakter};{Ehseg};{Elet};{Kedv};')
+
+
 def Köszöntő():
     global label1
     global label2
@@ -49,11 +56,15 @@ def Köszöntő():
 
     label2 = customtkinter.CTkLabel(master=frame1, text="Nevezd el az állatod!", font=("Roboto", 30))
     label2.pack(padx=10, pady=10)
-
-<<<<<<< HEAD
+# <<<<<<< HEAD
     text = customtkinter.CTkEntry(master=frame1, width=200, justify="center", font=("Roboto", 15))
     text.pack(padx=10, pady=10)
-=======
+# =======
+    button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: Választó(text.get()))
+    button1.pack(padx=10, pady=5)
+    Mentés()
+
+
 def UpdateSlider(Slider: ttk.Progressbar, value):
     Slider['value'] = value
 
@@ -93,11 +104,11 @@ def Kaja():
     vissza_button = customtkinter.CTkButton(master=frame1, text="Vissza", font=("Roboto", 20), command=lambda: Main(karakter))
     vissza_button.pack(padx=10, pady=10)
 
->>>>>>> master
-
     button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: Választó(text.get()))
     button1.pack(padx=10, pady=5)
     Mentés()
+
+
 def Main(inp_karakter: str):
     ClearScreen()
     global karakter
@@ -141,40 +152,39 @@ def Main(inp_karakter: str):
 
     UpdateSlider(KedvSlider, Kedv)
 
-<<<<<<< HEAD
-    buttonElet = customtkinter.CTkButton(master=frame1, text="Simogatás", width=120, height=30, command=lambda: ChangeElet(10))
-=======
     buttonElet = customtkinter.CTkButton(master=frame1, text="Simogatás", width=120, height=30, command=lambda: Simogatás())
->>>>>>> master
     buttonElet.pack(padx=10, pady=5, side="left")
     buttonEhseg = customtkinter.CTkButton(master=frame1, text="Megetetés", width=120, height=30, command=lambda: Kaja())
     buttonEhseg.pack(padx=10, pady=5, side='right')
     buttonKedv = customtkinter.CTkButton(master=frame1, text="Játék állatoddal", width=120, height=30, command=lambda: ChangeKedv(2 * AutoGame.Game()))
     buttonKedv.pack(padx=10, pady=5, side="right")
     Mentés()
+
+
 try:
     with open('SaveFile.txt', 'r', encoding='utf-8') as file:
         for sor in file.read().splitlines()[1:]:
-            statok.append(tamagotchi(sor))
-    Nev = t.név
-    karakter = t.kar
-    Ehseg = int(t.éhség)
-    Elet = int(t.élet)
-    Kedv = int(t.kedvv)
-    Main()
+            # statok.append(tamagotchi(sor))
+            adatok = sor.split(';')
+            Nev = adatok[0]
+            karakter = adatok[1]
+            Ehseg = adatok[2]
+            Elet = adatok[3]
+            Kedv = adatok[4]
+    # Nev = t.név
+    # karakter = t.kar
+    # Ehseg = int(t.éhség)
+    # Elet = int(t.élet)
+    # Kedv = int(t.kedvv)
+    Main(karakter)
 
-except FileNotFoundError:            
-    Nev = ' ' 
+except FileNotFoundError:
+    Nev = ' '
     karakter_image = None
     karakter = ""
-    Ehseg = 20 
+    Ehseg = 20
     Elet = 20
     Kedv = 20
-    tamagotchi.nev = ''
-    tamagotchi.karakter = ''
-    tamagotchi.ehseg = 20
-    tamagotchi.elet = 20
-    tamagotchi.kedv = 20
 
     Köszöntő()
 
@@ -206,8 +216,6 @@ def Kaja():
     vissza_button.pack(padx=10, pady=10)
 
 
-
-
 def Választó(text1: str):
     ClearScreen()
     global label3
@@ -230,8 +238,6 @@ def Választó(text1: str):
     Mentés()
 
 
-<<<<<<< HEAD
-=======
 def Köszöntő():
     global label1
     global label2
@@ -249,7 +255,6 @@ def Köszöntő():
 
     button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: nev_kotelezo(text.get()))
     button1.pack(padx=10, pady=5)
->>>>>>> master
 
 
 def nev_kotelezo(text):
@@ -259,9 +264,6 @@ def nev_kotelezo(text):
         Választó(text)
 
 
-def ClearScreen():
-    for widgets in frame1.winfo_children():
-        widgets.destroy()
 
 
 def ChangeElet(value: int):
@@ -291,12 +293,9 @@ def ChangeEhseg(value: int):
     Mentés()
 
 
-
-
 # def save_kereses():
 #     try:
 #         with open('SaveFile.txt', 'r', encoding='uft-8')
-
 Mentés()
 
 # Köszöntő()

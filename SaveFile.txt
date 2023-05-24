@@ -1,2 +1,2 @@
 nev;karakter;ehseg;elet;kedv;ido
-<property object at 0x0000000005612020>;<property object at 0x0000000005611FD0>;<property object at 0x0000000005612070>;<property object at 0x00000000056120C0>;<property object at 0x0000000005612110>;
+ ;anyud;50;70;20;
