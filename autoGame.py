@@ -70,7 +70,7 @@ class AutoGame:
         class PlayerVehicle(Vehicle):
 
             def __init__(self, x, y):
-                image = pygame.image.load('images/car.png')
+                image = pygame.image.load('images/autoGame/car.png')
                 super().__init__(image, x, y)
 
         # sprite groups
@@ -85,11 +85,11 @@ class AutoGame:
         image_filenames = ['pickup_truck.png', 'semi_trailer.png', 'taxi.png', 'van.png']
         vehicle_images = []
         for image_filename in image_filenames:
-            image = pygame.image.load('images/' + image_filename)
+            image = pygame.image.load('images/autoGame/' + image_filename)
             vehicle_images.append(image)
 
         # load the crash image
-        crash = pygame.image.load('images/crash.png')
+        crash = pygame.image.load('images/autoGame/crash.png')
         crash_rect = crash.get_rect()
 
         # game loop

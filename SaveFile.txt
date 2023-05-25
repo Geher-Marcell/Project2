@@ -1,2 +1,2 @@
 nev;karakter;ehseg;elet;kedv;ido
- ;anyud;70;70;20;
+ ;;30;30;20;05/25/23 09:21:07
