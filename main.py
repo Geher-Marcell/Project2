@@ -5,36 +5,26 @@ from tkinter import ttk
 from tkinter import messagebox
 import customtkinter
 from PIL import Image
+import os
 
 timeformat = '%m/%d/%y %H:%M:%S'
+kepeleres = "images/tamagotchies/"
 
-tamagotchi1 = customtkinter.CTkImage(Image.open("images/tamagotchi1.png"), size=(100, 100))
-tamagotchi2 = customtkinter.CTkImage(Image.open("images/tamagotchi2.png"), size=(100, 100))
-tamagotchi3 = customtkinter.CTkImage(Image.open("images/tamagotchi3.png"), size=(100, 100))
 hamburger_full = customtkinter.CTkImage(Image.open("images/hamburger.jpg"), size=(100, 100))
-hamburger_half = customtkinter.CTkImage(Image.open("images/halfHamburger.jpg"), size=(100, 100))
 
 t: tamagotchi = tamagotchi()
+
+
 customtkinter.set_default_color_theme("green")
 root = customtkinter.CTk()
 root.resizable(False, False)
-
 window_height = 450
 window_width = 450
-
 root.geometry(f"{window_height}x{window_width}")
-
 root.title("Tamagotchi")
 
 frame1 = customtkinter.CTkFrame(master=root)
 frame1.pack(padx=20, pady=10, fill="both", expand=True)
-
-# statok: list[tamagotchi] = []
-
-
-EletSlider = None
-EhsegSlider = None
-KedvSlider = None
 
 
 def ClearScreen():
@@ -43,7 +33,6 @@ def ClearScreen():
 
 
 def Mentés():
-    print("Mentés..")
     with open('SaveFile.txt', 'w', encoding='utf-8') as file:
         file.write('nev;karakter;ehseg;elet;kedv;ido\n')
 
@@ -51,7 +40,7 @@ def Mentés():
         file.write(f'{t.Nev};{t.Karakter};{t.Ehseg};{t.Elet};{t.Kedv};{currentDate}')
 
 
-def Köszöntő():
+def Név_Választó():
     label1 = customtkinter.CTkLabel(master=frame1, text="Szia, üdv a játékunkban!", font=("Roboto", 30))
     label1.pack(padx=10, pady=10)
 
@@ -61,7 +50,7 @@ def Köszöntő():
     text = customtkinter.CTkEntry(master=frame1, width=200, justify="center", font=("Roboto", 15))
     text.pack(padx=10, pady=10)
 
-    button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: Választó(text.get()))
+    button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: Karakter_Választó(text.get()))
     button1.pack(padx=10, pady=5)
     Mentés()
 
@@ -71,6 +60,8 @@ def UpdateSlider(Slider: ttk.Progressbar, value):
 
 
 def Simogatás():
+    global EletSlider
+
     ClearScreen()
 
     EletSlider = ttk.Progressbar(master=frame1, length=100, variable=t.Elet)
@@ -87,6 +78,8 @@ def Simogatás():
 
 
 def Kaja():
+    global EhsegSlider
+
     ClearScreen()
 
     EhsegSlider = ttk.Progressbar(master=frame1, length=100, variable=t.Ehseg)
@@ -103,30 +96,31 @@ def Kaja():
     vissza_button = customtkinter.CTkButton(master=frame1, text="Vissza", font=("Roboto", 20), command=lambda: Main(t.Karakter))
     vissza_button.pack(padx=10, pady=10)
 
-    # , command=lambda: Választó(text.get())
-
-    button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30)
-    button1.pack(padx=10, pady=5)
     Mentés()
 
 
-def Main(inp_karakter: str):
+def Main(*args):
+    global EletSlider
+    global EhsegSlider
+    global KedvSlider
+
     ClearScreen()
 
-    karakter = inp_karakter
-    if karakter == "kutya":
-        label_karakter = customtkinter.CTkLabel(master=frame1, image=tamagotchi1, text="", font=("Roboto", 30))
-        t.image = tamagotchi1
-        label_karakter.pack(padx=10, pady=10)
-    elif karakter == "macska":
-        label_karakter = customtkinter.CTkLabel(master=frame1, image=tamagotchi2, text="", font=("Roboto", 30))
-        t.image = tamagotchi2
-        label_karakter.pack(padx=10, pady=10)
-    elif karakter == "anyud":
-        label_karakter = customtkinter.CTkLabel(master=frame1, image=tamagotchi3, text="", font=("Roboto", 30))
-        t.image = tamagotchi3
-        label_karakter.pack(padx=10, pady=10)
+    if len(args) > 0:
+        t.Karakter = args[0]
 
+
+    label_nev = customtkinter.CTkLabel(master=frame1, text=f"{t.Nev}", font=("Roboto", 30, "bold"))
+    label_nev.pack(padx=10)
+
+    # Az állatka megjelítése
+    image = kepmegnyitas(t.Karakter, kepeleres)
+    label_karakter = customtkinter.CTkLabel(master=frame1, image=image, text="", font=("Roboto", 30))
+    label_karakter.pack(padx=10,pady=10)
+
+    t.image = image
+
+    # Élet slider
     label_elet = customtkinter.CTkLabel(master=frame1, text="Élet: ", font=("Roboto", 15))
     label_elet.pack(padx=10, pady=3)
     EletSlider = ttk.Progressbar(master=frame1, length=100, variable=t.Elet)
@@ -134,6 +128,7 @@ def Main(inp_karakter: str):
 
     UpdateSlider(EletSlider, t.Elet)
 
+    # Éhség slider
     label_ehseg = customtkinter.CTkLabel(master=frame1, text="Éhség: ", font=("Roboto", 15))
     label_ehseg.pack(padx=10, pady=3)
     EhsegSlider = ttk.Progressbar(master=frame1, length=100, variable=t.Ehseg)
@@ -141,6 +136,7 @@ def Main(inp_karakter: str):
 
     UpdateSlider(EhsegSlider, t.Ehseg)
 
+    # Kedv slider
     label_kedv = customtkinter.CTkLabel(master=frame1, text="Kedv: ", font=("Roboto", 15))
     label_kedv.pack(padx=10, pady=3)
     KedvSlider = ttk.Progressbar(master=frame1, length=100, variable=t.Kedv)
@@ -148,6 +144,7 @@ def Main(inp_karakter: str):
 
     UpdateSlider(KedvSlider, t.Kedv)
 
+    # Gombok
     buttonElet = customtkinter.CTkButton(master=frame1, text="Simogatás", width=120, height=30, command=lambda: Simogatás())
     buttonElet.pack(padx=10, pady=5, side="left")
     buttonEhseg = customtkinter.CTkButton(master=frame1, text="Megetetés", width=120, height=30, command=lambda: Kaja())
@@ -161,7 +158,7 @@ def Beolvasas():
     try:
         with open('SaveFile.txt', 'r', encoding='utf-8') as file:
             for sor in file.read().splitlines()[1:]:
-                # statok.append(tamagotchi(sor))
+                
                 adatok = sor.split(';')
                 n = adatok[0]
                 k = adatok[1]
@@ -171,70 +168,76 @@ def Beolvasas():
 
                 t.loadSave(n, k, Eh, El, Ke)
 
-                print("ido: ", adatok[5])
+                eltelt_ido = (datetime.now() - datetime.strptime(adatok[5], timeformat)).total_seconds()
+                t.Ehseg = clamp(int(t.Ehseg - (eltelt_ido / 10)), 0, 100)
+                t.Elet = clamp(int(t.Elet - (eltelt_ido / 10)), 0, 100)
+                t.Kedv = clamp(int(t.Kedv - (eltelt_ido / 10)), 0, 100)
 
         Main(t.Karakter)
 
     except FileNotFoundError:
-        Köszöntő()
+        Név_Választó()
 
 
-def Választó(text1: str):
+def Karakter_Választó(név: str):
     ClearScreen()
 
-    label3 = customtkinter.CTkLabel(master=frame1, text="Az állatod neve: " + text1, font=("Roboto", 30))
+    t.Nev = név
+    label3 = customtkinter.CTkLabel(master=frame1, text="Az állatod neve: " + név, font=("Roboto", 30))
     label3.pack(padx=10, pady=10)
+    #label3.grid(row=0, column=0, padx=10, pady=10)
+
     labelanyad = customtkinter.CTkLabel(master=frame1, text="Válaszd ki a karaktered: ", font=("Roboto", 30))
     labelanyad.pack(padx=10, pady=10)
+    #labelanyad.grid(row=1, column=0, padx=10, pady=10)
 
-    bbutton = customtkinter.CTkButton(master=frame1, image=tamagotchi1, text="", width=30, fg_color="transparent", command=lambda: Main("kutya"))
-    bbutton.pack(padx=10, pady=10, side="left")
-    bbutton1 = customtkinter.CTkButton(master=frame1, image=tamagotchi2, text="", width=30, fg_color="transparent", command=lambda: Main("macska"))
-    bbutton1.pack(padx=10, pady=10, side="right")
-    bbutton2 = customtkinter.CTkButton(master=frame1, image=tamagotchi3, text="", width=30, fg_color="transparent", command=lambda: Main("anyud"))
-    bbutton2.pack(padx=10, pady=10, side="right")
+    image_names = [os.path.splitext(f)[0] for f in os.listdir(kepeleres) if os.path.isfile(os.path.join(kepeleres, f)) and f.endswith('.png')]
+
+    # TODO: SPACING A KÉPEK KÖZÖTT
+    for i in range(len(image_names)):
+        bbutton = customtkinter.CTkButton(master=frame1, image=kepmegnyitas(image_names[i], kepeleres, (300/len(image_names))), text="", width=30, fg_color="transparent", command=lambda i=i: Main(image_names[i]))
+        ##bbutton.grid(row=5, column=i, sticky="W")
+        bbutton.pack(padx=10, pady=10, side="left", )
+
     Mentés()
 
 
-def nev_kotelezo(text):
-    if text.strip() == "":
+def kepmegnyitas(kepnev, kepeleres, size=100):
+        return customtkinter.CTkImage(Image.open(kepeleres + kepnev + ".png"), size=(size, size))
+
+
+def nev_kotelezo(név):
+    if név.strip() == "":
         messagebox.showerror("Hiba", "Kérlek, adj meg egy nevet az állatodnak!")
     else:
-        Választó(text)
+        Karakter_Választó(név)
 
 
 def ChangeElet(value: int):
+    t.Elet = clamp(t.Elet + value, 0, 100)
 
-    t.Elet += value
-    if t.Elet > 100:
-        t.Elet = 100
-    UpdateSlider(EletSlider,t. Elet)
+    UpdateSlider(EletSlider, t.Elet)
     Mentés()
 
 
 def ChangeKedv(value: int):
+    t.Kedv = clamp(t.Kedv + value, 0, 100)
 
-    t.Kedv += value
-    if t.Kedv > 100:
-        t.Kedv = 100
     UpdateSlider(KedvSlider, t.Kedv)
     Mentés()
 
 
 def ChangeEhseg(value: int):
+    t.Ehseg = clamp(t.Ehseg + value, 0, 100)
 
-    t.Ehseg += value
-    if t.Ehseg > 100:
-        t.Ehseg = 100
     UpdateSlider(EhsegSlider, t.Ehseg)
     Mentés()
 
+    
+def clamp(number, min_value, max_value):
+    return max(min(number, max_value), min_value)
 
 Beolvasas()
-
-Mentés()
-
-# Köszöntő()
 
 root.mainloop()
 

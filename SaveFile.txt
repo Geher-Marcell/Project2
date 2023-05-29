@@ -1,2 +1,0 @@
-nev;karakter;ehseg;elet;kedv;ido
- ;;30;30;20;05/25/23 09:21:07
