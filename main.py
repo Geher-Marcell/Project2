@@ -174,8 +174,12 @@ def Beolvasas():
                 t.Ehseg = clamp(int(t.Ehseg - (eltelt_ido / 10)), 0, 100)
                 t.Elet = clamp(int(t.Elet - (eltelt_ido / 10)), 0, 100)
                 t.Kedv = clamp(int(t.Kedv - (eltelt_ido / 10)), 0, 100)
-
-        Main(t.Karakter)
+        if not meghalt_e():
+            Main(t.Karakter)
+        else:
+            messagebox.showerror('R.I.P', f'Sajnáljuk, de {t.Nev} elpusztult :(')
+            mentés_törlése()
+            exit()
 
     except FileNotFoundError:
         Név_Választó()
@@ -213,6 +217,11 @@ def nev_kotelezo(név):
         messagebox.showerror("Hiba", "Kérlek, adj meg egy nevet az állatodnak!")
     else:
         Karakter_Választó(név)
+
+def meghalt_e():
+    if t.Ehseg == 0 or t.Elet == 0 or t.Kedv == 0:
+        return True
+    return False
 
 
 def ChangeElet(value: int):
