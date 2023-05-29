@@ -31,6 +31,8 @@ def ClearScreen():
     for widgets in frame1.winfo_children():
         widgets.destroy()
 
+def mentés_törlése():
+    os.system('cmd /k "del SaveFile.txt')
 
 def Mentés():
     with open('SaveFile.txt', 'w', encoding='utf-8') as file:
