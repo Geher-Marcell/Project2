@@ -1,34 +1,15 @@
-# class tamagotchi:
-#     # nev: str
-#     # karakter: str
-#     # ehseg: int
-#     # elet: int 
-#     # kedv: int 
+class tamagotchi:
+    Nev = ''
+    Karakter = ""
+    Ehseg = 20
+    Elet = 20
+    Kedv = 20
 
-#     def __init__(self, sor) -> None:
-#         adatok = sor.split(';')
-#         self.nev = adatok[0]
-#         self.karakter = adatok[1]
-#         self.ehseg = int(adatok[2])
-#         self.elet = int(adatok[3])
-#         self.kedv = int(adatok[4])
+    image = ""
 
-#     @property
-#     def név(self):
-#         return self.nev
-    
-#     @property
-#     def kar(self):
-#         return self.karakter
-    
-#     @property
-#     def éhség(self):
-#         return self.ehseg
-    
-#     @property
-#     def élet(self):
-#         return self.elet
-    
-#     @property
-#     def kedvv(self):
-#         return self.kedv
+    def loadSave(self, n, k, eh, el, ke):
+        self.Nev = n
+        self.Karakter = k
+        self.Ehseg = eh
+        self.Elet = el
+        self.Kedv = ke

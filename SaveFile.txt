@@ -1,2 +1,0 @@
-nev;karakter;ehseg;elet;kedv;ido
- ;anyud;70;70;20;
