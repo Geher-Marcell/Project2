@@ -1,0 +1,2 @@
+nev;karakter;ehseg;elet;kedv;ido
+rddg;kutya;17;17;23;05/30/23 09:06:39

@@ -151,9 +151,24 @@ def Main(*args):
     buttonElet.pack(padx=10, pady=5, side="left")
     buttonEhseg = customtkinter.CTkButton(master=frame1, text="Megetetés", width=120, height=30, command=lambda: Kaja())
     buttonEhseg.pack(padx=10, pady=5, side='right')
-    buttonKedv = customtkinter.CTkButton(master=frame1, text="Játék állatoddal", width=120, height=30, command=lambda: ChangeKedv(2 * AutoGame.Game()))
+    buttonKedv = customtkinter.CTkButton(master=frame1, text="Játék állatoddal", width=120, height=30, command=lambda: jatekValaszto())
     buttonKedv.pack(padx=10, pady=5, side="right")
     Mentés()
+
+def jatekValaszto():
+    global KedvSlider
+    ClearScreen()
+
+    KedvSlider = ttk.Progressbar(master=frame1, length=100, variable=t.Kedv)
+    KedvSlider.pack(padx=10, pady=10)
+
+    UpdateSlider(KedvSlider, t.Kedv)
+
+    auto_btn = customtkinter.CTkButton(master=frame1, text="Autóverseny", font=("Roboto", 20), command=lambda: ChangeKedv(2 * AutoGame.Game()))
+    auto_btn.pack(padx=10, pady=10)
+
+    vissza_button = customtkinter.CTkButton(master=frame1, text="Vissza", font=("Roboto", 20), command=lambda: Main(t.Karakter))
+    vissza_button.pack(padx=10, pady=10)
 
 
 def Beolvasas():
