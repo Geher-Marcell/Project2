@@ -1,4 +1,5 @@
 from autoGame import AutoGame
+from snakeGame import snakeGame
 from tamagotchi import tamagotchi
 from datetime import datetime
 from tkinter import ttk
@@ -31,8 +32,10 @@ def ClearScreen():
     for widgets in frame1.winfo_children():
         widgets.destroy()
 
+
 def mentés_törlése():
     os.system('cmd /k "del SaveFile.txt')
+
 
 def Mentés():
     with open('SaveFile.txt', 'w', encoding='utf-8') as file:
@@ -111,14 +114,13 @@ def Main(*args):
     if len(args) > 0:
         t.Karakter = args[0]
 
-
     label_nev = customtkinter.CTkLabel(master=frame1, text=f"{t.Nev}", font=("Roboto", 30, "bold"))
     label_nev.pack(padx=10)
 
     # Az állatka megjelítése
     image = kepmegnyitas(t.Karakter, kepeleres)
     label_karakter = customtkinter.CTkLabel(master=frame1, image=image, text="", font=("Roboto", 30))
-    label_karakter.pack(padx=10,pady=10)
+    label_karakter.pack(padx=10, pady=10)
 
     t.image = image
 
@@ -151,16 +153,35 @@ def Main(*args):
     buttonElet.pack(padx=10, pady=5, side="left")
     buttonEhseg = customtkinter.CTkButton(master=frame1, text="Megetetés", width=120, height=30, command=lambda: Kaja())
     buttonEhseg.pack(padx=10, pady=5, side='right')
-    buttonKedv = customtkinter.CTkButton(master=frame1, text="Játék állatoddal", width=120, height=30, command=lambda: ChangeKedv(2 * AutoGame.Game()))
+    buttonKedv = customtkinter.CTkButton(master=frame1, text="Játék állatoddal", width=120, height=30, command=lambda: jatekValaszto())
     buttonKedv.pack(padx=10, pady=5, side="right")
     Mentés()
+
+
+def jatekValaszto():
+    global KedvSlider
+    ClearScreen()
+
+    KedvSlider = ttk.Progressbar(master=frame1, length=100, variable=t.Kedv)
+    KedvSlider.pack(padx=10, pady=10)
+
+    UpdateSlider(KedvSlider, t.Kedv)
+
+    auto_btn = customtkinter.CTkButton(master=frame1, text="Autóverseny", font=("Roboto", 20), command=lambda: ChangeKedv(2 * AutoGame.Game()))
+    auto_btn.pack(padx=10, pady=10)
+
+    snake_btn = customtkinter.CTkButton(master=frame1, text="Snake", font=("Roboto", 20), command=lambda: ChangeKedv(2 * snakeGame.Game()))
+    snake_btn.pack(padx=10, pady=10)
+
+    vissza_button = customtkinter.CTkButton(master=frame1, text="Vissza", font=("Roboto", 20), command=lambda: Main(t.Karakter))
+    vissza_button.pack(padx=10, pady=10)
 
 
 def Beolvasas():
     try:
         with open('SaveFile.txt', 'r', encoding='utf-8') as file:
             for sor in file.read().splitlines()[1:]:
-                
+
                 adatok = sor.split(';')
                 n = adatok[0]
                 k = adatok[1]
@@ -191,25 +212,25 @@ def Karakter_Választó(név: str):
     t.Nev = név
     label3 = customtkinter.CTkLabel(master=frame1, text="Az állatod neve: " + név, font=("Roboto", 30))
     label3.pack(padx=10, pady=10)
-    #label3.grid(row=0, column=0, padx=10, pady=10)
+    # label3.grid(row=0, column=0, padx=10, pady=10)
 
     labelanyad = customtkinter.CTkLabel(master=frame1, text="Válaszd ki a karaktered: ", font=("Roboto", 30))
     labelanyad.pack(padx=10, pady=10)
-    #labelanyad.grid(row=1, column=0, padx=10, pady=10)
+    # labelanyad.grid(row=1, column=0, padx=10, pady=10)
 
     image_names = [os.path.splitext(f)[0] for f in os.listdir(kepeleres) if os.path.isfile(os.path.join(kepeleres, f)) and f.endswith('.png')]
 
     # TODO: SPACING A KÉPEK KÖZÖTT
     for i in range(len(image_names)):
-        bbutton = customtkinter.CTkButton(master=frame1, image=kepmegnyitas(image_names[i], kepeleres, (300/len(image_names))), text="", width=30, fg_color="transparent", command=lambda i=i: Main(image_names[i]))
-        ##bbutton.grid(row=5, column=i, sticky="W")
+        bbutton = customtkinter.CTkButton(master=frame1, image=kepmegnyitas(image_names[i], kepeleres, (300 / len(image_names))), text="", width=30, fg_color="transparent", command=lambda i=i: Main(image_names[i]))
+        # bbutton.grid(row=5, column=i, sticky="W")
         bbutton.pack(padx=10, pady=10, side="left", )
 
     Mentés()
 
 
 def kepmegnyitas(kepnev, kepeleres, size=100):
-        return customtkinter.CTkImage(Image.open(kepeleres + kepnev + ".png"), size=(size, size))
+    return customtkinter.CTkImage(Image.open(kepeleres + kepnev + ".png"), size=(size, size))
 
 
 def nev_kotelezo(név):
@@ -217,6 +238,7 @@ def nev_kotelezo(név):
         messagebox.showerror("Hiba", "Kérlek, adj meg egy nevet az állatodnak!")
     else:
         Karakter_Választó(név)
+
 
 def meghalt_e():
     if t.Ehseg == 0 or t.Elet == 0 or t.Kedv == 0:
@@ -244,9 +266,10 @@ def ChangeEhseg(value: int):
     UpdateSlider(EhsegSlider, t.Ehseg)
     Mentés()
 
-    
+
 def clamp(number, min_value, max_value):
     return max(min(number, max_value), min_value)
+
 
 Beolvasas()
 

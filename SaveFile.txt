@@ -1,0 +1,2 @@
+nev;karakter;ehseg;elet;kedv;ido
+gfd;kutya;72;72;63;05/30/23 09:45:24
