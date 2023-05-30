@@ -175,9 +175,10 @@ class AutoGame:
 
                     # add to score
                     score += 1
+
+                    Kedv += 1
                     if Kedv > 100:
                         Kedv = 100
-                    Kedv += 1
 
                     # speed up the game after passing 5 vehicles
                     if score > 0 and score % 5 == 0:
