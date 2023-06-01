@@ -31,11 +31,15 @@ class snakeGame:
         score_font = pygame.font.SysFont("comicsansms", 35)
 
         def our_snake(snake_block, snake_list):
-            for x in snake_list:
-                if x == snake_list[-1]:
-                    pygame.draw.rect(dis, white, [x[0], x[1], snake_block, snake_block])
+            for i in range(len(snake_list)):
+                current_snake = snake_list[i]
+                if current_snake == snake_list[-1]:
+                    pygame.draw.rect(dis, white, [current_snake[0], current_snake[1], snake_block, snake_block])
                 else:
-                    pygame.draw.rect(dis, (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)), [x[0], x[1], snake_block, snake_block])
+                    if i%2 == 0:
+                        pygame.draw.rect(dis, (0, 200, 80), [current_snake[0], current_snake[1], snake_block, snake_block])
+                    else:
+                        pygame.draw.rect(dis, (0, 120, 50), [current_snake[0], current_snake[1], snake_block, snake_block])
 
         def message(msg, color):
             mesg = font_style.render(msg, True, color)
@@ -105,7 +109,7 @@ class snakeGame:
             x1 += x1_change
             y1 += y1_change
             dis.fill(black)
-            pygame.draw.rect(dis, green, [foodx, foody, snake_block, snake_block])
+            pygame.draw.rect(dis, red, [foodx, foody, snake_block, snake_block])
             snake_Head = []
             snake_Head.append(x1)
             snake_Head.append(y1)
