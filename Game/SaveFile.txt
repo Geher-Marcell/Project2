@@ -1,0 +1,2 @@
+nev;karakter;ehseg;elet;kedv;ido
+asd;macska;100;100;28;06/01/23 19:12:21

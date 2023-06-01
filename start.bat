@@ -1,2 +1,2 @@
+cd Game
 python main.py
-PAUSE
