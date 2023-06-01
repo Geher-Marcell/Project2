@@ -194,15 +194,14 @@ class AutoGame:
             text_rect.center = (50, 400)
             screen.blit(text, text_rect)
 
+
+            # display the kedv
+            kedv_text = font.render('Kedv: ' + str(Kedv), True, white)
+            kedv_text_rect = kedv_text.get_rect()
+            kedv_text_rect.center = (50, 200)
+            screen.blit(kedv_text, kedv_text_rect)
+
             # check if there's a head on collision
-
-            # display the score
-            font = pygame.font.Font(pygame.font.get_default_font(), 16)
-            text = font.render('Kedv: ' + str(Kedv), True, white)
-            text_rect = text.get_rect()
-            text_rect.center = (50, 200)
-            screen.blit(text, text_rect)
-
             if pygame.sprite.spritecollide(player, vehicle_group, True):
                 gameover = True
                 crash_rect.center = [player.rect.center[0], player.rect.top]

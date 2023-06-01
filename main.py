@@ -55,13 +55,14 @@ def Név_Választó():
     text = customtkinter.CTkEntry(master=frame1, width=200, justify="center", font=("Roboto", 15))
     text.pack(padx=10, pady=10)
 
-    button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: Karakter_Választó(text.get()))
+    button1 = customtkinter.CTkButton(master=frame1, text="Tovább", width=200, height=30, command=lambda: nev_kotelezo(text.get()))
     button1.pack(padx=10, pady=5)
     Mentés()
 
 
 def UpdateSlider(Slider: ttk.Progressbar, value):
     Slider['value'] = value
+    Mentés()
 
 
 def Simogatás():
@@ -174,7 +175,7 @@ def jatekValaszto():
     snake_btn.pack(padx=10, pady=10)
 
     vissza_button = customtkinter.CTkButton(master=frame1, text="Vissza", font=("Roboto", 20), command=lambda: Main(t.Karakter))
-    vissza_button.pack(padx=10, pady=10)
+    vissza_button.pack(padx=10, pady=10, side="bottom")
 
 
 def Beolvasas():
