@@ -1,0 +1,2 @@
+nev;karakter;ehseg;elet;kedv;ido
+;kutya;100;100;50;06/01/23 18:24:08
