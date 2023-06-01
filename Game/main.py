@@ -271,6 +271,12 @@ def ChangeEhseg(value: int):
 def clamp(number, min_value, max_value):
     return max(min(number, max_value), min_value)
 
+os.system("cls")
+
+print("DEBUG CONSOLE")
+print("-----Info----")
+print("If you have a white square, please press right click")
+print("----Errors---")
 
 Beolvasas()
 
