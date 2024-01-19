@@ -1,4 +1,4 @@
-# 2022-2023-as tanév 2. projectmunka
+# 2022-2023-as tanév 2. projektmunka
 
 ### Csapattagok:
 
